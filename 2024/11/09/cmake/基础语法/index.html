@@ -9,7 +9,7 @@
     
     <title>
         
-            cmake 简介 |
+            基础语法 |
         
         topshihun&#39;s blog
     </title>
@@ -178,7 +178,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        cmake 简介
+                        基础语法
                     </div>
                 
 
@@ -206,12 +206,12 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
-                <span class="datetime">2024-10-20</span>
+                <span class="datetime">2024-11-09</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Sun Oct 20 2024 16:59:48 GMT+0800">2024-10-20</span>
+                <span class="datetime" data-updated="Sat Nov 09 2024 20:54:50 GMT+0800">2024-11-09</span>
             </span>
         
 
@@ -231,7 +231,7 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>970 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>1.3k 字</span>
             </span>
         
         
@@ -250,37 +250,41 @@
                     
 
                     
-                         <p><img   src="/../../images/cmake/cmake%E7%AE%80%E4%BB%8B/cmake_head.png"  alt="cmake_head"></p>
-<p>CMake是一个跨平台的开源工具家族，用于构建、测试和打包文件。CMake通过简单的平台无关且编译器无关的配置文件来控制软件的编译流程，并能够生成原生的Makefile和工作空间，以便用于用户所选择的编译环境。为了满足开源项目对强大的跨平台构建工具的需求，Kitware公司创建了CMake工具套装。</p>
+                         <p>CMake脚本语言本身就是一个图灵完备的语言，只不过主要用途是组织项目构建。像其他语言一样，学习CMake脚本语言也需要先了解cmake脚本语言的基本语言。</p>
+<p>如何声明变量，如何使用循环跳转，如何声明和调用函数或者cmake脚本语言的其他特性等等。</p>
+<p>CMake文件一般分为两类：<strong>1. CMakeLists.txt    2.扩展名为.cmake</strong></p>
+<p>第一种文件用来组织项目管理，本章节不做讨论，第二种文件就是可以使用cmake来执行脚本的cmake脚本文件。可以使用<code>cmake -P **.cmake</code>来执行脚本文件。</p>
+<p>也有很多人将第二种文件分为脚本文件以及模块文件，实际上两者本质没有区别，被称为模块只是因为它只会被其他文件复用&#x2F;包含。第一种以及第二种都可以使用<code>include</code>指令包含其他的第二种文件。</p>
 <span id="more"></span>
 
-<p>CMake可以在多个操作系统下运行，常用的Linux、Windows等操作系统都有其版本。CMake开放源代码，具有一定的安全性且免费。上面说CMake是一个“家族”意思是CMake有一些列工具：CMake、CPack和CTest来完成编译、打包以及测试。但是在普通情况下CMake所说的就是单一的CMake用于构建代码的工具。</p>
-<p>CMake通过用户写的配置文件来生成当前系统下所拥有的构建系统的配置文件，以生成的配置来编译。如在Linux下，环境中有GNU Make，那么CMake就会生成对应的makefile文件然后通过Make工具进行编译。在Windows下，环境中有VS，那么就会生成MSBuild（就是VS的项目管理文件）文件，然后通过VS对代码进行编译。如一个系统中有多个构建系统，那么CMake就会自动或者手动选择一个构建系统来进行生成。这样的话，只需写一次配置文件，那这个配置文件可以放在不同的系统中构建代码，前提是代码也是跨平台的。</p>
-<h2 id="CMake的优势"><a href="#CMake的优势" class="headerlink" title="CMake的优势"></a>CMake的优势</h2><ol>
-<li>效率高</li>
-</ol>
-<p>CMake不需要像Makefile一样指定参数，指定编译器，只需要写少量的配置文件就能实现构建系统。这样对于跨平台需求甚至不需要更改配置文件，即使对某个系统做特定操作也可以使用CMake提供的接口实现自定义化。</p>
-<ol start="2">
-<li>生态好</li>
-</ol>
-<p>由于CMake是开源软件，使开发人员更愿意适配CMake，更愿意使用CMake去开发软件。开源软件也意味着会永远有活力，即使公司放弃项目也会有其他开源人员愿意继续开发，最坏的结果也可以是自己维护。</p>
-<p>开源社区有很多项目使用CMake构建，直接使用CMake来管理包的构建和安装流程。使用CMake基本上可以一键安装第三方软件包。</p>
-<ol start="3">
-<li>强大的脚本语言</li>
-</ol>
-<p>CMake的脚本语法虽然用起来很让人不舒服，但是它的强大是母庸置疑的。提供了很多字符串操作、文件操作、数字操作等命令。</p>
-<p>CMake脚本语言是领域特定语言（Domain Specific Language, DSL），即专注于某个应用程序特定的语言。所以CMake专注于构建系统，提供了很多构建相关的命令。</p>
-<ol start="4">
-<li>向后兼容</li>
-</ol>
-<p>能使用很久很久以前的CMake构建系统。CMake提供了策略机制保证稳定的向后兼容，保证原有配置的可用的同时也会给出相应的警告提示。</p>
-<h2 id="安装CMake"><a href="#安装CMake" class="headerlink" title="安装CMake"></a>安装CMake</h2><p>安装CMake很方便。主要下载文件都在<a class="link"   target="_blank" rel="noopener" href="https://cmake.org/" >官网<i class="fas fa-external-link-alt"></i></a>。</p>
-<h3 id="Windows安装CMake"><a href="#Windows安装CMake" class="headerlink" title="Windows安装CMake"></a>Windows安装CMake</h3><p>在官网中找到<em>Download</em>按钮，单机进入CMake的下载页面。</p>
-<p>Windows有两种安装方式：zip安装和installer安装。</p>
-<p>使用zip安装需要自己配置环境变量，使用installer可以自动设置环境变量。</p>
-<h3 id="Linux安装CMake"><a href="#Linux安装CMake" class="headerlink" title="Linux安装CMake"></a>Linux安装CMake</h3><p>一般情况使用Linux自带的包管理就能自动安装，比如debian，可以使用<code>sudo apt install cmake</code>来安装，但是这种安装cmake的版本会比较旧。</p>
-<p>想要最新版的CMake就需要在官网下载<code>*.sh</code>的脚本，使用root权限去运行就能安装最新的CMake。</p>
+<h2 id="输出指令"><a href="#输出指令" class="headerlink" title="输出指令"></a>输出指令</h2><p>在学习C语言时，第一个学习的就是在main函数中使用printf函数输出字符串，而现在要使用cmake脚本语言输出一串字符串。</p>
+<p>首先新建一个文件<strong>hello.cmake</strong>，在该文件中输入</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">message</span>(<span class="string">&quot;Hello, CMake!&quot;</span>)</span><br></pre></td></tr></table></figure>
 
+<p>在中断执行<code>cmake -P hello.cmake</code>，就会输出**Hello, CMake!**。</p>
+<p>在上面的脚本中可以看到没有主函数，仅仅“调用了message函数，传入了一个字符串，最后使用cmake执行输出到标准输出中”。可以得出该脚本语言没有所谓的主函数，它是按顺序执行的，而里面的<strong>message</strong>是cmake提供的命令，cmake脚本语言基本都是靠命令来驱动的，几乎所有操作都是命令。</p>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>每个语言都应该有注释，注释能帮助开发人员理解代码。。。</p>
+<p>在cmake脚本语言中，注释可以是单行注释以及多行注释。</p>
+<h3 id="单行注释"><a href="#单行注释" class="headerlink" title="单行注释"></a>单行注释</h3><p>单行注释就类似于C语言中的<code>\\</code>，就是只能对单行起作用。而cmake脚本使用<code>#</code>作为单行注释。形如以下代码：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">message</span>(                 <span class="comment"># This is a single-line comment.</span></span><br><span class="line">    <span class="string">&quot;This is a message.&quot;</span> <span class="comment"># This is a single-line comment.</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="多行注释"><a href="#多行注释" class="headerlink" title="多行注释"></a>多行注释</h3><p>多行注释就是对多行注释起作用，类似C语言中的<code>/* 注释 */</code>，C语言是使用<code>/*和*/</code>将注释包起来，而cmake脚本使用<code>#[=[和]=]#</code>将注释包起来。形如以下代码：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[=[</span></span><br><span class="line">This</span><br><span class="line">is</span><br><span class="line">a</span><br><span class="line">multiline</span><br><span class="line">comment.</span><br><span class="line">]=]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<p>多行注释起始符号以及结束符号都是<strong>对称</strong>的，其中一个<strong>井号</strong>两个<strong>中括号</strong>是必须的，而中括号中的<strong>等号</strong>的数量是自定义的，可以为0个，为了就是将注释用到的特殊符号组合也能放到注释中去。</p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>同大多数编程语言一样，CMake中的变量也是存储数据的基本单元，但CMake变量有些与众不同：其数据总是文本型的，只不过在使用时，文本型的变量可能被一些命令解释成数值，列表等，以实现更加丰富的功能。</p>
+<p>CMake变量的数据类型只有一种，但CMake却有三种变量分类。<br>1.普通变量。大部分变量都是普通变量，它们具有特定的作用域。<br>2.缓存变量。能够被缓存的变量，会被持久化到缓存文件CMakeCacth.txt。CMake程序每次被执行时，都会从被持久化的缓存文件中读取缓存变量的值。<br>3.环境变量。操作系统中的环境变量，因此他对于CMake进程而言具有全局作用的作用域。</p>
+<p>普通变量会被绑定到某个作用域中。作用域分为两种：<br>1.函数作用域。在用户自定义的函数命令中会有一个独立的作用域。<br>2.目录作用域。对于CMake的目录程序而言，每一个层级目录，都有它的一个作用域。</p>
+<p>CMake会将以下3种形式的名称作为保留标识符，自定义变量或命令时应当注意避开它们：<br>1.以<code>CMAKE_</code>开头的名称（不区分大小写）<br>2.以<code>_CMAKE_</code>开头的名称（不区分大小写）<br>3.下划线<code>_</code>加上CMake种任意一个预定义命令的名称，如<code>_message</code>。</p>
+<h3 id="预定义变量"><a href="#预定义变量" class="headerlink" title="预定义变量"></a>预定义变量</h3><p>常用的预定义变量：</p>
+<p>CMAKE_ARGC 表示CMake脚本程序在被cmake -P命令调用执行时，命令行传递的参数个数。</p>
+<p>CMAKE_ARGV0,CMAKE_ARGV1表示CMake脚本程序在被命令行调用执行时，命令行传递的第一个、第二个参数。如果有更多参数，可以以此类推。</p>
+<p>CMAKE_COMMAND 表示CMake命令行程序所在的路径。</p>
+<p>CMAKE_HOST_SYSTEM_NAME 表示宿主机操作系统名称。</p>
+<h3 id="声明变量"><a href="#声明变量" class="headerlink" title="声明变量"></a>声明变量</h3><p>cmake脚本语言使用<code>set</code>命令声明和初始化变量，在cmake脚本中，set命令既能定义变量，也能为变量赋值。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span>()</span><br><span class="line"><span class="keyword">set</span>(a <span class="number">1</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用变量"><a href="#使用变量" class="headerlink" title="使用变量"></a>使用变量</h3>
                     
                 </div>
 
@@ -290,11 +294,11 @@
     <div class="copyright-info-content border-box">
         <div class="copyright-info-top border-box">
             <div class="copyright-post-title border-box text-ellipsis">
-                cmake 简介
+                基础语法
             </div>
 
             <div class="copyright-post-link border-box text-ellipsis">
-                2024/10/20/cmake/cmake简介/
+                2024/11/09/cmake/基础语法/
             </div>
         </div>
 
@@ -310,7 +314,7 @@
                 <div class="type">
                     发布于
                 </div>
-                <div class="content">2024-10-20 15:48</div>
+                <div class="content">2024-11-09 16:25</div>
             </div>
 
 
@@ -354,31 +358,15 @@
                 
                     <div class="post-nav border-box">
                         
-                            <div class="prev-post">
-                                <a class="prev"
-                                   rel="prev"
-                                   href="/2024/11/09/cmake/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/"
-                                   title="基础语法"
-                                >
-                                    <span class="left arrow-icon flex-center">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </span>
-                                    <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">基础语法</span>
-                                        <span class="post-nav-item">上一篇</span>
-                                    </span>
-                                </a>
-                            </div>
-                        
                         
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/2024/10/17/cmake/%E5%9F%BA%E7%A1%80/"
-                                   title="cmake基础"
+                                   href="/2024/10/20/cmake/cmake%E7%AE%80%E4%BB%8B/"
+                                   title="cmake 简介"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">cmake基础</span>
+                                        <span class="post-nav-title-item text-ellipsis">cmake 简介</span>
                                         <span class="post-nav-item">下一篇</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
@@ -406,7 +394,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CMake%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-text">CMake的优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85CMake"><span class="nav-text">安装CMake</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows%E5%AE%89%E8%A3%85CMake"><span class="nav-text">Windows安装CMake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux%E5%AE%89%E8%A3%85CMake"><span class="nav-text">Linux安装CMake</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%8C%87%E4%BB%A4"><span class="nav-text">输出指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A"><span class="nav-text">注释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%A1%8C%E6%B3%A8%E9%87%8A"><span class="nav-text">单行注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%A1%8C%E6%B3%A8%E9%87%8A"><span class="nav-text">多行注释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F"><span class="nav-text">预定义变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%8F%98%E9%87%8F"><span class="nav-text">声明变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%8F%98%E9%87%8F"><span class="nav-text">使用变量</span></a></li></ol></li></ol>
     </div>
 </div>
 
@@ -537,7 +525,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CMake%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-text">CMake的优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85CMake"><span class="nav-text">安装CMake</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows%E5%AE%89%E8%A3%85CMake"><span class="nav-text">Windows安装CMake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux%E5%AE%89%E8%A3%85CMake"><span class="nav-text">Linux安装CMake</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%8C%87%E4%BB%A4"><span class="nav-text">输出指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A"><span class="nav-text">注释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%A1%8C%E6%B3%A8%E9%87%8A"><span class="nav-text">单行注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%A1%8C%E6%B3%A8%E9%87%8A"><span class="nav-text">多行注释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F"><span class="nav-text">预定义变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%8F%98%E9%87%8F"><span class="nav-text">声明变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%8F%98%E9%87%8F"><span class="nav-text">使用变量</span></a></li></ol></li></ol>
     </div>
 </div>
 
